@@ -1,8 +1,22 @@
 # copyright (c) 2014-2015 florent claerhout, released under the MIT license.
+# coding: utf-8
 
 import unittest
 
 import strfmt # 3rd-party
+
+class ClassTree(object):
+	"make a class iterable over its sub-classes"
+
+	def __init__(self, cls):
+		assert type(cls) is type
+		self.cls = cls
+
+	__str__ = lambda self = True: self.cls.__name__
+
+	def __iter__(self):
+		for subcls in self.cls.__subclasses__():
+			yield ClassTree(subcls)
 
 class Test(unittest.TestCase):
 
